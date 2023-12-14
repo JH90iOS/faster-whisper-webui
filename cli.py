@@ -177,7 +177,7 @@ def cli():
             
             transcriber.write_result(result, source_name, output_dir)
         
-        with concurrent.futures.ThreadPoolExecutor(sources.count()) as executor:
+        with concurrent.futures.ThreadPoolExecutor(len(sources)) as executor:
             futures = {executor.submit(process_source,source):source for source in sources}
             for future in concurrent.futures.as_completed(futures):
                 print('-----task completed !!')
