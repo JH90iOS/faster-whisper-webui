@@ -15,8 +15,12 @@ from src.utils import optional_float, optional_int, str2bool
 from src.whisper.whisperFactory import create_whisper_container
 
 import concurrent.futures 
+import time
 
 def cli():
+    starttime = time.time()
+    print('----- start time ------')
+    print(starttime)
     app_config = ApplicationConfig.create_default()
     whisper_models = app_config.get_model_names()
 
@@ -185,7 +189,11 @@ def cli():
                 
             print('------all task completed !!!!')
             
-
+            
+    endtime = time.time()
+    print('----- end time ------')
+    print(endtime)
+    
     transcriber.close()
     
 
