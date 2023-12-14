@@ -14,6 +14,8 @@ from src.languages import get_language_names
 from src.utils import optional_float, optional_int, str2bool
 from src.whisper.whisperFactory import create_whisper_container
 
+import concurrent.futures 
+
 def cli():
     app_config = ApplicationConfig.create_default()
     whisper_models = app_config.get_model_names()
@@ -149,9 +151,22 @@ def cli():
         else:
             sources.append({ "path": audio_path, "name": os.path.basename(audio_path) })
 
-        for source in sources:
-            print("=======================11111111========")
-            print(source)
+        sources.append({"path":'samples/zh-20min.wav',"name":'zh-20min.wav'})
+        
+        
+        # for source in sources:
+
+        #     source_path = source["path"]
+        #     source_name = source["name"]
+
+        #     vadOptions = VadOptions(vad, vad_merge_window, vad_max_merge_size, vad_padding, vad_prompt_window, 
+        #                             VadInitialPromptMode.from_string(vad_initial_prompt_mode))
+
+        #     result = transcriber.transcribe_file(model, source_path, temperature=temperature, vadOptions=vadOptions, **args)
+            
+        #     transcriber.write_result(result, source_name, output_dir)
+        
+        def process_source(source):
             source_path = source["path"]
             source_name = source["name"]
 
@@ -161,8 +176,18 @@ def cli():
             result = transcriber.transcribe_file(model, source_path, temperature=temperature, vadOptions=vadOptions, **args)
             
             transcriber.write_result(result, source_name, output_dir)
+        
+        with concurrent.futures.ThreadPoolExecutor(sources.count()) as executor:
+            futures = {executor.submit(process_source,source):source for source in sources}
+            for future in concurrent.futures.as_completed(futures):
+                print('-----task completed !!')
+                
+            print('------all task completed !!!!')
+            
 
     transcriber.close()
+    
+
 
 def uri_validator(x):
     try:
