@@ -151,23 +151,12 @@ def cli():
         else:
             sources.append({ "path": audio_path, "name": os.path.basename(audio_path) })
 
-        sources.append({"path":'samples/zh-20min.wav',"name":'zh-20min.wav'})
-        sources.append({"path":'samples/zh-21min.wav',"name":'zh-21min.wav'})
+        # sources.append({"path":'samples/zh-20min.wav',"name":'zh-20min.wav'})
+        # sources.append({"path":'samples/zh-21min.wav',"name":'zh-21min.wav'})
 
         
-        # for source in sources:
+        for source in sources:
 
-        #     source_path = source["path"]
-        #     source_name = source["name"]
-
-        #     vadOptions = VadOptions(vad, vad_merge_window, vad_max_merge_size, vad_padding, vad_prompt_window, 
-        #                             VadInitialPromptMode.from_string(vad_initial_prompt_mode))
-
-        #     result = transcriber.transcribe_file(model, source_path, temperature=temperature, vadOptions=vadOptions, **args)
-            
-        #     transcriber.write_result(result, source_name, output_dir)
-        
-        def process_source(source):
             source_path = source["path"]
             source_name = source["name"]
 
@@ -178,12 +167,23 @@ def cli():
             
             transcriber.write_result(result, source_name, output_dir)
         
-        with concurrent.futures.ThreadPoolExecutor(len(sources)) as executor:
-            futures = {executor.submit(process_source,source):source for source in sources}
-            for future in concurrent.futures.as_completed(futures):
-                print('-----task completed !!')
+        # def process_source(source):
+        #     source_path = source["path"]
+        #     source_name = source["name"]
+
+        #     vadOptions = VadOptions(vad, vad_merge_window, vad_max_merge_size, vad_padding, vad_prompt_window, 
+        #                             VadInitialPromptMode.from_string(vad_initial_prompt_mode))
+
+        #     result = transcriber.transcribe_file(model, source_path, temperature=temperature, vadOptions=vadOptions, **args)
+            
+        #     transcriber.write_result(result, source_name, output_dir)
+        
+        # with concurrent.futures.ThreadPoolExecutor(len(sources)) as executor:
+        #     futures = {executor.submit(process_source,source):source for source in sources}
+        #     for future in concurrent.futures.as_completed(futures):
+        #         print('-----task completed !!')
                 
-            print('------all task completed !!!!')
+        #     print('------all task completed !!!!')
             
 
     transcriber.close()
