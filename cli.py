@@ -150,6 +150,8 @@ def cli():
             sources.append({ "path": audio_path, "name": os.path.basename(audio_path) })
 
         for source in sources:
+            print("=======================11111111========")
+            print(source)
             source_path = source["path"]
             source_name = source["name"]
 
