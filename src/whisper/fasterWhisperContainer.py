@@ -50,7 +50,7 @@ class FasterWhisperContainer(AbstractWhisperContainer):
         # model_path = FASTER_WHISPER_MODELS_PATH[model_config.url]
         model_path = os.path.join(os.path.join("models", "faster-whisper"),model_config.url)
         # model = WhisperModel(model_config.url, device=device, compute_type=self.compute_type)
-        model = WhisperModel(model_size_or_path=model_path, device=device, compute_type=self.compute_type)
+        model = WhisperModel(model_size_or_path=model_path, device=device, compute_type=self.compute_type,num_workers=3,cpu_threads=2)
         return model
 
     def create_callback(self, language: str = None, task: str = None, initial_prompt: str = None, 
