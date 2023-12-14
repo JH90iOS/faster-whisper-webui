@@ -193,6 +193,10 @@ def cli():
     endtime = time.time()
     print('----- end time ------')
     print(endtime)
+    drt=endtime-starttime
+    print('------ total duration ------')
+    print(drt)
+    
     
     transcriber.close()
     
