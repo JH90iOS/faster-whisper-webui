@@ -152,7 +152,7 @@ def cli():
             sources.append({ "path": audio_path, "name": os.path.basename(audio_path) })
 
         sources.append({"path":'samples/zh-20min.wav',"name":'zh-20min.wav'})
-        sources.append({"path":'samples/zh-21min.wav',"name":'zh-21min.wav'})
+        # sources.append({"path":'samples/zh-21min.wav',"name":'zh-21min.wav'})
 
         
         # for source in sources:
