@@ -217,7 +217,6 @@ def cli(no):
     # print('------ total duration ------')
     # print(drt)
     
-    
     transcriber.close()
     
 
