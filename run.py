@@ -22,8 +22,7 @@ if __name__ == '__main__':
     process1.join()
     process2.join()
     
-    process1.close()
-    process2.close()
+
 
     endtime = time.time()
     print('----- end time ------')
@@ -31,3 +30,6 @@ if __name__ == '__main__':
     drt=endtime-starttime
     print('------ total duration ------')
     print(drt)
+    
+    process1.close()
+    process2.close()
