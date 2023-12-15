@@ -10,8 +10,11 @@ if __name__ == '__main__':
     print('----- start time ------')
     print(starttime)
     
-    process1 = Process(target=call_cli1,args=(1))
-    process2 = Process(target=call_cli1,args=(2))
+    n1 = 1
+    n2 = 0
+    
+    process1 = Process(target=call_cli1,args=(n1,))
+    process2 = Process(target=call_cli1,args=(n2,))
     
     process1.start()
     process2.start()
