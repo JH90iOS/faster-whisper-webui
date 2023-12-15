@@ -77,7 +77,7 @@
     // The default VAD.
     "default_vad": "silero-vad",
     // A commma delimited list of CUDA devices to use for parallel processing. If None, disable parallel processing.
-    "vad_parallel_devices": 0,
+    "vad_parallel_devices": "0",
     // The number of CPU cores to use for VAD pre-processing.
     "vad_cpu_cores": 3,
     // The number of seconds before inactivate processes are terminated. Use 0 to close processes immediately, or None for no timeout.
