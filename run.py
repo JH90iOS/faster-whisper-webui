@@ -22,8 +22,6 @@ if __name__ == '__main__':
     process1.join()
     process2.join()
     
-
-
     endtime = time.time()
     print('----- end time ------')
     print(endtime)
