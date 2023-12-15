@@ -145,7 +145,7 @@ class ParallelTranscription(AbstractTranscription):
             segment_index += len(device_segment_list)
 
             progress_listener_to_queue = _ProgressListenerToQueue(progress_queue)
-            parameters.append([audio, whisperCallable, device_config, progress_listener_to_queue]);
+            parameters.append([audio, whisperCallable, device_config, progress_listener_to_queue])
 
         merged = {
             'text': '',

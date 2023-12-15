@@ -75,7 +75,7 @@
     // The default model name.
     "default_model_name": "large-v2",
     // The default VAD.
-    "default_vad": "silero-vad",
+    "default_vad": null,
     // A commma delimited list of CUDA devices to use for parallel processing. If None, disable parallel processing.
     "vad_parallel_devices": "0",
     // The number of CPU cores to use for VAD pre-processing.
