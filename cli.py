@@ -17,10 +17,10 @@ from src.whisper.whisperFactory import create_whisper_container
 import concurrent.futures 
 import time
 
-def cli():
-    starttime = time.time()
-    print('----- start time ------')
-    print(starttime)
+def cli(no):
+    # starttime = time.time()
+    # print('----- start time ------')
+    # print(starttime)
     app_config = ApplicationConfig.create_default()
     whisper_models = app_config.get_model_names()
 
@@ -142,20 +142,39 @@ def cli():
 
     if (transcriber._has_parallel_devices()):
         print("Using parallel devices:", transcriber.parallel_device_list)
-
-    for audio_path in args.pop("audio"):
-        sources = []
-
-        # Detect URL and download the audio
-        if (uri_validator(audio_path)):
-            # Download from YouTube/URL directly
-            for source_path in  download_url(audio_path, maxDuration=-1, destinationDirectory=output_dir, playlistItems=None):
-                source_name = os.path.basename(source_path)
-                sources.append({ "path": source_path, "name": source_name })
-        else:
-            sources.append({ "path": audio_path, "name": os.path.basename(audio_path) })
-
+        
+    sources = []
+    if(no == 1):
         sources.append({"path":'samples/zh-20min.wav',"name":'zh-20min.wav'})
+    else:
+        sources.append({"path":'samples/zh-sp1.wav',"name":'zh-sp1.wav'})
+        
+    for source in sources:
+
+        source_path = source["path"]
+        source_name = source["name"]
+
+        vadOptions = VadOptions(vad, vad_merge_window, vad_max_merge_size, vad_padding, vad_prompt_window, 
+                                    VadInitialPromptMode.from_string(vad_initial_prompt_mode))
+
+        result = transcriber.transcribe_file(model, source_path, temperature=temperature, vadOptions=vadOptions, **args)
+            
+        transcriber.write_result(result, source_name, output_dir)
+            
+
+    # for audio_path in args.pop("audio"):
+    #     sources = []
+
+    #     # Detect URL and download the audio
+    #     if (uri_validator(audio_path)):
+    #         # Download from YouTube/URL directly
+    #         for source_path in  download_url(audio_path, maxDuration=-1, destinationDirectory=output_dir, playlistItems=None):
+    #             source_name = os.path.basename(source_path)
+    #             sources.append({ "path": source_path, "name": source_name })
+    #     else:
+    #         sources.append({ "path": audio_path, "name": os.path.basename(audio_path) })
+
+    #     sources.append({"path":'samples/zh-20min.wav',"name":'zh-20min.wav'})
         # sources.append({"path":'samples/zh-21min.wav',"name":'zh-21min.wav'})
 
         
@@ -171,31 +190,32 @@ def cli():
             
         #     transcriber.write_result(result, source_name, output_dir)
         
-        def process_source(source):
-            source_path = source["path"]
-            source_name = source["name"]
+        # def process_source(source):
+        #     source_path = source["path"]
+        #     source_name = source["name"]
 
-            vadOptions = VadOptions(vad, vad_merge_window, vad_max_merge_size, vad_padding, vad_prompt_window, 
-                                    VadInitialPromptMode.from_string(vad_initial_prompt_mode))
+        #     vadOptions = VadOptions(vad, vad_merge_window, vad_max_merge_size, vad_padding, vad_prompt_window, 
+        #                             VadInitialPromptMode.from_string(vad_initial_prompt_mode))
 
-            result = transcriber.transcribe_file(model, source_path, temperature=temperature, vadOptions=vadOptions, **args)
+        #     result = transcriber.transcribe_file(model, source_path, temperature=temperature, vadOptions=vadOptions, **args)
             
-            transcriber.write_result(result, source_name, output_dir)
+        #     transcriber.write_result(result, source_name, output_dir)
         
-        with concurrent.futures.ThreadPoolExecutor(len(sources)) as executor:
-            futures = {executor.submit(process_source,source):source for source in sources}
-            for future in concurrent.futures.as_completed(futures):
-                print('-----task completed !!')
+        # with concurrent.futures.ThreadPoolExecutor(len(sources)) as executor:
+        #     futures = {executor.submit(process_source,source):source for source in sources}
+        #     for future in concurrent.futures.as_completed(futures):
+        #         pass
+        #         print('-----task completed !!')
                 
-            print('------all task completed !!!!')
+        #     print('------all task completed !!!!')
             
             
-    endtime = time.time()
-    print('----- end time ------')
-    print(endtime)
-    drt=endtime-starttime
-    print('------ total duration ------')
-    print(drt)
+    # endtime = time.time()
+    # print('----- end time ------')
+    # print(endtime)
+    # drt=endtime-starttime
+    # print('------ total duration ------')
+    # print(drt)
     
     
     transcriber.close()
