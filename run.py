@@ -3,7 +3,7 @@ from multiprocessing import Process
 import time
 
 def call_cli1(n):
-    cli(n)
+    cli.cli(n)
     
 if __name__ == '__main__':
     starttime = time.time()
