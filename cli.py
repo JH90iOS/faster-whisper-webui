@@ -17,7 +17,7 @@ from src.whisper.whisperFactory import create_whisper_container
 import concurrent.futures 
 import time
 
-def cli(no):
+def cli():
     starttime = time.time()
     print('----- start time ------')
     print(starttime)
