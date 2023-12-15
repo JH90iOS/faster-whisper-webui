@@ -31,8 +31,8 @@ def cli(no):
     default_whisper_implementation = os.environ.get("WHISPER_IMPLEMENTATION", app_config.whisper_implementation)
 
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("audio", nargs="+", type=str, \
-                        help="audio file(s) to transcribe")
+    # parser.add_argument("audio", nargs="+", type=str, \
+    #                     help="audio file(s) to transcribe")
     parser.add_argument("--model", default=app_config.default_model_name, choices=whisper_models, \
                         help="name of the Whisper model to use") # medium
     parser.add_argument("--model_dir", type=str, default=app_config.model_dir, \
